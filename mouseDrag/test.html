@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>拖拽demo</title>
+    <script src="../resource/js/jquery-2.2.4.min.js"></script>
+    <style>
+        .box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .box_child {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #800aef, #1b80c7, #e21717);
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: all 2s ease;
+            top: calc(50% - 50px);
+        }
+
+        .zc_box {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #800aef, #1b80c7, #e21717);
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: bold;
+            border-radius: 5px;
+            top: calc(50% - 50px);
+        }
+
+        .box_child:hover {
+            transform: rotate(3650deg);
+            background: linear-gradient(135deg, #1be700, #f4f800, #00d9ff);
+            border-radius: 50%;
+            color: #1675f7;
+        }
+
+        .animation_test {
+            width: 100px;
+            height: 100px;
+            border: 1px solid #ebebeb;
+            animation: test 5s infinite;
+        }
+
+        @keyframes test {
+            0% {
+                background: red;
+            }
+            25% {
+                background: #f8d300;
+                border-radius: 25%;
+            }
+            50% {
+                background: yellow;
+                border-radius: 50%;
+            }
+            75% {
+                background: green;
+                border-radius: 25%;
+            }
+            100% {
+                background: blue;
+            }
+        }
+
+        .blur {
+            color: transparent;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div id="testBox" class="zc_box">mouse</div>
+        <div style="left: 100px;" id="block" class="box_child">touch</div>
+    </div>
+    <p class="blur">Lorem  ipsum dolor sit amet consectetur adipisicing elit. Optio tempore sunt saepe doloribus eos quidem autem illo explicabo enim harum recusandae a minus, ab repellendus assumenda, quia, blanditiis maiores animi!</p>
+    <button disabled onclick="sss()">click me</button>
+
+    <div class="animation_test"></div>
+
+    <script>
+        function sss() {
+            console.log('111');
+        }
+        let testBox = document.getElementById('testBox');
+        let block = document.getElementById('block');
+
+        // 鼠标拖拽
+        let ow, oh;
+        testBox.addEventListener('mousedown', (e) => {
+            ow = e.clientX - testBox.offsetLeft;
+            oh = e.clientY - testBox.offsetTop;
+            testBox.addEventListener('mousemove', asdasd)
+        });
+        testBox.addEventListener('mouseup', (e) => {
+            testBox.removeEventListener('mousemove', asdasd);
+        })
+        testBox.addEventListener('mouseleave', () => {
+            testBox.removeEventListener('mousemove', asdasd);
+        })
+
+        function asdasd(e) {
+            var left = e.clientX - ow;
+            var top = e.clientY - oh;
+            if (left <= 0) {
+                left = 0;
+            } else if (left >= document.documentElement.clientWidth - testBox.offsetWidth) {
+                left = document.documentElement.clientWidth - testBox.offsetWidth;
+            }
+            if (top <= 0) {
+                top = 0;
+            } else if (top >= document.documentElement.clientHeight - testBox.offsetHeight) {
+                top = document.documentElement.clientHeight - testBox.offsetHeight;
+            }
+            testBox.style.left = left + 'px';
+            testBox.style.top = top + 'px';
+        }
+
+        // 手指拖拽
+        let oW, oH;
+        // 绑定touchstart事件
+        block.addEventListener("touchstart", function (e) {
+            var touches = e.touches[0];
+            oW = touches.clientX - block.offsetLeft;
+            oH = touches.clientY - block.offsetTop;
+        }, false)
+        block.addEventListener("touchmove", function (e) {
+            e.preventDefault();
+            var touches = e.touches[0];
+            var oLeft = touches.clientX - oW;
+            var oTop = touches.clientY - oH;
+            if (oLeft < 0) {
+                oLeft = 0;
+            } else if (oLeft > document.documentElement.clientWidth - block.offsetWidth) {
+                oLeft = (document.documentElement.clientWidth - block.offsetWidth);
+            }
+            if (oTop < 0) {
+                oTop = 0;
+            } else if (oTop > document.documentElement.clientHeight - block.offsetHeight) {
+                oTop = document.documentElement.clientHeight - block.offsetHeight;
+            }
+            block.style.left = oLeft + "px";
+            block.style.top = oTop + "px";
+        }, false);
+    </script>
+</body>
+
+</html>
