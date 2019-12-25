@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>抵消 | offset</title>
+  <style>
+    *{
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+    .horse-run {
+      offset-path: path("M130,180 q100,120 120,20 q140,-50 160,0");
+      animation: move 3s linear infinite;
+    }
+
+    @keyframes move {
+      100% {
+        offset-distance: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <img class="horse-run" src="https://www.zhangxinxu.com/study/201702/horse.png" alt="">
+  <span class="horse-run">7</span>
+</body>
+
+</html>

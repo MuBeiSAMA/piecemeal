@@ -4,14 +4,13 @@
       <h2>easy search!</h2>
       <input  class="input_box" type="text" @keyup="get($event)" v-model="wd" @keydown.down="next" @keydown.up.prevent="last">
       <ul class="list" type='none'>
-        <li class="list_item" v-for="(a,index) in tipList" @click="choose(index)" :class="{bg:now === index}">{{a}}</li>
+        <li class="list_item" v-for="(a,idx) in tipList" :key="idx" @click="choose(idx)" :class="{bg:now === idx}">{{a}}</li>
       </ul>
     </div>
   </div>
 </template>
 
 <script>
-// import axios from '@/axios'
 export default {
   data() {
     return {
@@ -45,9 +44,9 @@ export default {
             // this.searchList = res.body.s;
             this.tipList = res.body.s;
           },
-          res => {
+          err => {
             //失败显示状态码
-            alert(res.status);
+            alert(err.status);
           }
         );
     },
